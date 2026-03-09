@@ -1,1 +1,202 @@
-<html><head></head><body style="overflow-wrap: break-word; -webkit-nbsp-mode: space; line-break: after-white-space;"><div>&lt;!DOCTYPE html&gt;</div><div>&lt;html&gt;</div><div>&lt;head&gt;</div><div>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</div><div>&lt;title&gt;Happy Birthday Jaggu&lt;/title&gt;</div><div><br></div><div>&lt;style&gt;</div><div><br></div><div>body{</div><div>margin:0;</div><div>text-align:center;</div><div>font-family:Arial;</div><div>background:linear-gradient(45deg,#ff758c,#ff7eb3);</div><div>color:white;</div><div>overflow:hidden;</div><div>}</div><div><br></div><div>/* animated name */</div><div><br></div><div>.name{</div><div>font-size:10vw;</div><div>font-weight:bold;</div><div>margin-top:30px;</div><div>animation: glow 2s infinite alternate;</div><div>}</div><div><br></div><div>@keyframes glow{</div><div>from{ text-shadow:0 0 10px white,0 0 20px pink;}</div><div>to{ text-shadow:0 0 20px yellow,0 0 40px orange;}</div><div>}</div><div><br></div><div>.subtitle{</div><div>font-size:6vw;</div><div>}</div><div><br></div><div>/* cake animation */</div><div><br></div><div>.cake{</div><div>font-size:20vw;</div><div>animation:bounce 2s infinite;</div><div>}</div><div><br></div><div>@keyframes bounce{</div><div>0%{transform:translateY(0)}</div><div>50%{transform:translateY(-20px)}</div><div>100%{transform:translateY(0)}</div><div>}</div><div><br></div><div>/* balloons */</div><div><br></div><div>.balloon{</div><div>position:absolute;</div><div>bottom:-150px;</div><div>font-size:40px;</div><div>animation:float 10s infinite;</div><div>}</div><div><br></div><div>@keyframes float{</div><div>0%{transform:translateY(0)}</div><div>100%{transform:translateY(-120vh)}</div><div>}</div><div><br></div><div>/* gift */</div><div><br></div><div>.gift{</div><div>font-size:18vw;</div><div>cursor:pointer;</div><div>margin-top:20px;</div><div>}</div><div><br></div><div>/* hidden message */</div><div><br></div><div>#message{</div><div>display:none;</div><div>font-size:4.5vw;</div><div>padding:20px;</div><div>max-width:90%;</div><div>margin:auto;</div><div>line-height:1.5;</div><div>}</div><div><br></div><div>/* fireworks */</div><div><br></div><div>canvas{</div><div>position:fixed;</div><div>top:0;</div><div>left:0;</div><div>pointer-events:none;</div><div>}</div><div><br></div><div>&lt;/style&gt;</div><div>&lt;/head&gt;</div><div><br></div><div>&lt;body&gt;</div><div><br></div><div>&lt;div class="name"&gt;🎉 Jaggu 🎉&lt;/div&gt;</div><div><br></div><div>&lt;div class="subtitle"&gt;Happy Birthday&lt;/div&gt;</div><div><br></div><div>&lt;div class="cake"&gt;🎂&lt;/div&gt;</div><div><br></div><div>&lt;p&gt;Click the gift 🎁&lt;/p&gt;</div><div><br></div><div>&lt;div class="gift" onclick="showMessage()"&gt;🎁&lt;/div&gt;</div><div><br></div><div>&lt;div id="message"&gt;</div><div><br></div><div>Happy Birthday tuahera huuh, ab kya bole🫨, tumhe to khush hona chahiye you got me by your side...😮‍💨😉 &nbsp;</div><div>the goat the legend the zubin...😎🫢 &nbsp;</div><div><br></div><div>kabhi itna cool banda dekhi ho ?? 😎😎 &nbsp;</div><div><br></div><div>jokes apart😌 so, ive never met you i don't know tum kesi ho, kesi dikhti ho, kya ho tum bass i guess angel priya na ho.. 🙃🤧 &nbsp;</div><div><br></div><div>to be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakwass hoti hai but i like it &nbsp;</div><div><br></div><div>tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠 &nbsp;</div><div><br></div><div>urge to know about every single pinch of your life..!! 🫠🫠 &nbsp;</div><div><br></div><div>ye sab to theek hai one more thing you are awesome ive never met topper like you before jo itna cool ho &nbsp;</div><div><br></div><div>tum perfect tum best ho 🫡🫶🫵💪 &nbsp;</div><div><br></div><div>i wish all your dreams come true orr tum ek bohot respectful or independent women 🥰☺️ &nbsp;</div><div><br></div><div>doesn't matter tum doctor bano ya na bano tum best krogi apni life mei...!!! 😇☺️☺️ &nbsp;</div><div><br></div><div>soo once again happy birthday pyari jaggu ❤️🤝🥳</div><div><br></div><div>&lt;/div&gt;</div><div><br></div><div>&lt;!-- balloons --&gt;</div><div><br></div><div>&lt;div class="balloon" style="left:10%"&gt;🎈&lt;/div&gt;</div><div>&lt;div class="balloon" style="left:30%;animation-delay:2s;"&gt;🎈&lt;/div&gt;</div><div>&lt;div class="balloon" style="left:50%;animation-delay:4s;"&gt;🎈&lt;/div&gt;</div><div>&lt;div class="balloon" style="left:70%;animation-delay:1s;"&gt;🎈&lt;/div&gt;</div><div>&lt;div class="balloon" style="left:90%;animation-delay:3s;"&gt;🎈&lt;/div&gt;</div><div><br></div><div>&lt;!-- music --&gt;</div><div><br></div><div>&lt;audio autoplay loop&gt;</div><div>&lt;source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"&gt;</div><div>&lt;/audio&gt;</div><div><br></div><div>&lt;canvas id="fireworks"&gt;&lt;/canvas&gt;</div><div><br></div><div>&lt;script&gt;</div><div><br></div><div>function showMessage(){</div><div>document.getElementById("message").style.display="block";</div><div>}</div><div><br></div><div>/* fireworks */</div><div><br></div><div>const canvas = document.getElementById("fireworks");</div><div>const ctx = canvas.getContext("2d");</div><div><br></div><div>canvas.width = window.innerWidth;</div><div>canvas.height = window.innerHeight;</div><div><br></div><div>let particles=[];</div><div><br></div><div>function createFirework(){</div><div>for(let i=0;i&lt;60;i++){</div><div>particles.push({</div><div>x:Math.random()*canvas.width,</div><div>y:Math.random()*canvas.height,</div><div>vx:(Math.random()-0.5)*6,</div><div>vy:(Math.random()-0.5)*6,</div><div>life:100</div><div>});</div><div>}</div><div>}</div><div><br></div><div>function update(){</div><div>ctx.clearRect(0,0,canvas.width,canvas.height);</div><div><br></div><div>particles.forEach((p,i)=&gt;{</div><div>p.x+=p.vx;</div><div>p.y+=p.vy;</div><div>p.life--;</div><div><br></div><div>ctx.fillStyle="white";</div><div>ctx.fillRect(p.x,p.y,3,3);</div><div><br></div><div>if(p.life&lt;=0){</div><div>particles.splice(i,1);</div><div>}</div><div>});</div><div><br></div><div>requestAnimationFrame(update);</div><div>}</div><div><br></div><div>setInterval(createFirework,900);</div><div>update();</div><div><br></div><div>&lt;/script&gt;</div><div><br></div><div>&lt;/body&gt;</div><div>&lt;/html&gt;</div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Jaggu</title>
+
+<style>
+
+body{
+margin:0;
+text-align:center;
+font-family:Arial;
+background:linear-gradient(45deg,#ff758c,#ff7eb3);
+color:white;
+overflow:hidden;
+}
+
+/* animated name */
+
+.name{
+font-size:10vw;
+font-weight:bold;
+margin-top:30px;
+animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{ text-shadow:0 0 10px white,0 0 20px pink;}
+to{ text-shadow:0 0 20px yellow,0 0 40px orange;}
+}
+
+.subtitle{
+font-size:6vw;
+}
+
+/* cake animation */
+
+.cake{
+font-size:20vw;
+animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+0%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+100%{transform:translateY(0)}
+}
+
+/* balloons */
+
+.balloon{
+position:absolute;
+bottom:-150px;
+font-size:40px;
+animation:float 10s infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+100%{transform:translateY(-120vh)}
+}
+
+/* gift */
+
+.gift{
+font-size:18vw;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* hidden message */
+
+#message{
+display:none;
+font-size:4.5vw;
+padding:20px;
+max-width:90%;
+margin:auto;
+line-height:1.5;
+}
+
+/* fireworks */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="name">🎉 Jaggu 🎉</div>
+
+<div class="subtitle">Happy Birthday</div>
+
+<div class="cake">🎂</div>
+
+<p>Click the gift 🎁</p>
+
+<div class="gift" onclick="showMessage()">🎁</div>
+
+<div id="message">
+
+Happy Birthday tuahera huuh, ab kya bole🫨, tumhe to khush hona chahiye you got me by your side...😮‍💨😉  
+the goat the legend the zubin...😎🫢  
+
+kabhi itna cool banda dekhi ho ?? 😎😎  
+
+jokes apart😌 so, ive never met you i don't know tum kesi ho, kesi dikhti ho, kya ho tum bass i guess angel priya na ho.. 🙃🤧  
+
+to be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakwass hoti hai but i like it  
+
+tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠  
+
+urge to know about every single pinch of your life..!! 🫠🫠  
+
+ye sab to theek hai one more thing you are awesome ive never met topper like you before jo itna cool ho  
+
+tum perfect tum best ho 🫡🫶🫵💪  
+
+i wish all your dreams come true orr tum ek bohot respectful or independent women 🥰☺️  
+
+doesn't matter tum doctor bano ya na bano tum best krogi apni life mei...!!! 😇☺️☺️  
+
+soo once again happy birthday pyari jaggu ❤️🤝🥳
+
+</div>
+
+<!-- balloons -->
+
+<div class="balloon" style="left:10%">🎈</div>
+<div class="balloon" style="left:30%;animation-delay:2s;">🎈</div>
+<div class="balloon" style="left:50%;animation-delay:4s;">🎈</div>
+<div class="balloon" style="left:70%;animation-delay:1s;">🎈</div>
+<div class="balloon" style="left:90%;animation-delay:3s;">🎈</div>
+
+<!-- music -->
+
+<audio autoplay loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+
+function showMessage(){
+document.getElementById("message").style.display="block";
+}
+
+/* fireworks */
+
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles=[];
+
+function createFirework(){
+for(let i=0;i<60;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*6,
+vy:(Math.random()-0.5)*6,
+life:100
+});
+}
+}
+
+function update(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach((p,i)=>{
+p.x+=p.vx;
+p.y+=p.vy;
+p.life--;
+
+ctx.fillStyle="white";
+ctx.fillRect(p.x,p.y,3,3);
+
+if(p.life<=0){
+particles.splice(i,1);
+}
+});
+
+requestAnimationFrame(update);
+}
+
+setInterval(createFirework,900);
+update();
+
+</script>
+
+</body>
+</html>
