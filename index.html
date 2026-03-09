@@ -10,40 +10,64 @@ body{
 margin:0;
 text-align:center;
 font-family:Arial;
-background:linear-gradient(45deg,#ff758c,#ff7eb3);
+background:linear-gradient(45deg,#ff4e8a,#ff9a8b,#ffc3a0);
 color:white;
 overflow:hidden;
 }
 
-/* animated name */
+/* name glow */
 
 .name{
-font-size:10vw;
+font-size:11vw;
 font-weight:bold;
 margin-top:30px;
 animation: glow 2s infinite alternate;
 }
 
 @keyframes glow{
-from{ text-shadow:0 0 10px white,0 0 20px pink;}
-to{ text-shadow:0 0 20px yellow,0 0 40px orange;}
+from{ text-shadow:0 0 20px white,0 0 40px pink;}
+to{ text-shadow:0 0 40px yellow,0 0 80px orange;}
 }
 
 .subtitle{
 font-size:6vw;
 }
 
-/* cake animation */
+/* cake */
 
 .cake{
-font-size:20vw;
-animation:bounce 2s infinite;
+font-size:22vw;
+animation:bounce 1.8s infinite;
 }
 
 @keyframes bounce{
 0%{transform:translateY(0)}
-50%{transform:translateY(-20px)}
+50%{transform:translateY(-30px)}
 100%{transform:translateY(0)}
+}
+
+/* gift */
+
+.gift{
+font-size:20vw;
+cursor:pointer;
+margin-top:20px;
+transition:transform .3s;
+}
+
+.gift:hover{
+transform:scale(1.2);
+}
+
+/* message */
+
+#message{
+display:none;
+font-size:4.5vw;
+padding:20px;
+max-width:90%;
+margin:auto;
+line-height:1.6;
 }
 
 /* balloons */
@@ -51,7 +75,7 @@ animation:bounce 2s infinite;
 .balloon{
 position:absolute;
 bottom:-150px;
-font-size:40px;
+font-size:45px;
 animation:float 10s infinite;
 }
 
@@ -60,26 +84,18 @@ animation:float 10s infinite;
 100%{transform:translateY(-120vh)}
 }
 
-/* gift */
+/* hearts */
 
-.gift{
-font-size:18vw;
-cursor:pointer;
-margin-top:20px;
+.heart{
+position:absolute;
+font-size:30px;
+animation:heartFloat 6s linear infinite;
 }
 
-/* hidden message */
-
-#message{
-display:none;
-font-size:4.5vw;
-padding:20px;
-max-width:90%;
-margin:auto;
-line-height:1.5;
+@keyframes heartFloat{
+0%{transform:translateY(0)}
+100%{transform:translateY(-100vh)}
 }
-
-/* fireworks */
 
 canvas{
 position:fixed;
@@ -94,7 +110,6 @@ pointer-events:none;
 <body>
 
 <div class="name">🎉 Jaggu 🎉</div>
-
 <div class="subtitle">Happy Birthday</div>
 
 <div class="cake">🎂</div>
@@ -116,15 +131,9 @@ to be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakw
 
 tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠  
 
-urge to know about every single pinch of your life..!! 🫠🫠  
-
-ye sab to theek hai one more thing you are awesome ive never met topper like you before jo itna cool ho  
-
 tum perfect tum best ho 🫡🫶🫵💪  
 
 i wish all your dreams come true orr tum ek bohot respectful or independent women 🥰☺️  
-
-doesn't matter tum doctor bano ya na bano tum best krogi apni life mei...!!! 😇☺️☺️  
 
 soo once again happy birthday pyari jaggu ❤️🤝🥳
 
@@ -138,10 +147,17 @@ soo once again happy birthday pyari jaggu ❤️🤝🥳
 <div class="balloon" style="left:70%;animation-delay:1s;">🎈</div>
 <div class="balloon" style="left:90%;animation-delay:3s;">🎈</div>
 
+<!-- hearts -->
+
+<div class="heart" style="left:20%">❤️</div>
+<div class="heart" style="left:40%;animation-delay:2s;">💖</div>
+<div class="heart" style="left:60%;animation-delay:3s;">💗</div>
+<div class="heart" style="left:80%;animation-delay:1s;">💘</div>
+
 <!-- music -->
 
 <audio autoplay loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
 
 <canvas id="fireworks"></canvas>
@@ -150,6 +166,7 @@ soo once again happy birthday pyari jaggu ❤️🤝🥳
 
 function showMessage(){
 document.getElementById("message").style.display="block";
+confettiExplosion();
 }
 
 /* fireworks */
@@ -163,13 +180,14 @@ canvas.height = window.innerHeight;
 let particles=[];
 
 function createFirework(){
-for(let i=0;i<60;i++){
+for(let i=0;i<70;i++){
 particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-vx:(Math.random()-0.5)*6,
-vy:(Math.random()-0.5)*6,
-life:100
+vx:(Math.random()-0.5)*7,
+vy:(Math.random()-0.5)*7,
+life:100,
+color:`hsl(${Math.random()*360},100%,60%)`
 });
 }
 }
@@ -182,8 +200,8 @@ p.x+=p.vx;
 p.y+=p.vy;
 p.life--;
 
-ctx.fillStyle="white";
-ctx.fillRect(p.x,p.y,3,3);
+ctx.fillStyle=p.color;
+ctx.fillRect(p.x,p.y,4,4);
 
 if(p.life<=0){
 particles.splice(i,1);
@@ -193,8 +211,23 @@ particles.splice(i,1);
 requestAnimationFrame(update);
 }
 
-setInterval(createFirework,900);
+setInterval(createFirework,800);
 update();
+
+/* confetti */
+
+function confettiExplosion(){
+for(let i=0;i<200;i++){
+particles.push({
+x:window.innerWidth/2,
+y:window.innerHeight/2,
+vx:(Math.random()-0.5)*10,
+vy:(Math.random()-0.5)*10,
+life:120,
+color:`hsl(${Math.random()*360},100%,60%)`
+});
+}
+}
 
 </script>
 
