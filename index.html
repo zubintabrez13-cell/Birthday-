@@ -10,64 +10,43 @@ body{
 margin:0;
 text-align:center;
 font-family:Arial;
-background:linear-gradient(45deg,#ff4e8a,#ff9a8b,#ffc3a0);
+background:linear-gradient(45deg,#ff758c,#ff7eb3);
 color:white;
 overflow:hidden;
 }
 
-/* name glow */
-
 .name{
-font-size:11vw;
+font-size:10vw;
 font-weight:bold;
-margin-top:30px;
+margin-top:20px;
 animation: glow 2s infinite alternate;
 }
 
 @keyframes glow{
-from{ text-shadow:0 0 20px white,0 0 40px pink;}
-to{ text-shadow:0 0 40px yellow,0 0 80px orange;}
+from{ text-shadow:0 0 10px white,0 0 20px pink;}
+to{ text-shadow:0 0 20px yellow,0 0 40px orange;}
 }
-
-.subtitle{
-font-size:6vw;
-}
-
-/* cake */
 
 .cake{
-font-size:22vw;
-animation:bounce 1.8s infinite;
+font-size:20vw;
+animation:bounce 2s infinite;
 }
 
 @keyframes bounce{
 0%{transform:translateY(0)}
-50%{transform:translateY(-30px)}
+50%{transform:translateY(-20px)}
 100%{transform:translateY(0)}
 }
 
-/* gift */
-
 .gift{
-font-size:20vw;
+font-size:18vw;
 cursor:pointer;
-margin-top:20px;
-transition:transform .3s;
 }
-
-.gift:hover{
-transform:scale(1.2);
-}
-
-/* message */
 
 #message{
 display:none;
-font-size:4.5vw;
+font-size:4vw;
 padding:20px;
-max-width:90%;
-margin:auto;
-line-height:1.6;
 }
 
 /* balloons */
@@ -75,7 +54,7 @@ line-height:1.6;
 .balloon{
 position:absolute;
 bottom:-150px;
-font-size:45px;
+font-size:40px;
 animation:float 10s infinite;
 }
 
@@ -84,17 +63,21 @@ animation:float 10s infinite;
 100%{transform:translateY(-120vh)}
 }
 
-/* hearts */
+/* GAME */
 
-.heart{
-position:absolute;
-font-size:30px;
-animation:heartFloat 6s linear infinite;
+#gameArea{
+width:90%;
+height:250px;
+margin:auto;
+border:3px dashed white;
+position:relative;
+border-radius:20px;
 }
 
-@keyframes heartFloat{
-0%{transform:translateY(0)}
-100%{transform:translateY(-100vh)}
+#cakeGame{
+position:absolute;
+font-size:50px;
+cursor:pointer;
 }
 
 canvas{
@@ -110,7 +93,8 @@ pointer-events:none;
 <body>
 
 <div class="name">🎉 Jaggu 🎉</div>
-<div class="subtitle">Happy Birthday</div>
+
+<h2>Happy Birthday</h2>
 
 <div class="cake">🎂</div>
 
@@ -120,41 +104,24 @@ pointer-events:none;
 
 <div id="message">
 
-Happy Birthday tuahera huuh, ab kya bole🫨, tumhe to khush hona chahiye you got me by your side...😮‍💨😉  
-the goat the legend the zubin...😎🫢  
-
-kabhi itna cool banda dekhi ho ?? 😎😎  
-
-jokes apart😌 so, ive never met you i don't know tum kesi ho, kesi dikhti ho, kya ho tum bass i guess angel priya na ho.. 🙃🤧  
-
-to be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakwass hoti hai but i like it  
-
-tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠  
-
-tum perfect tum best ho 🫡🫶🫵💪  
-
-i wish all your dreams come true orr tum ek bohot respectful or independent women 🥰☺️  
-
-soo once again happy birthday pyari jaggu ❤️🤝🥳
+Happy Birthday pyari Jaggu ❤️  
+Wish you success, happiness and all dreams come true 🎉
 
 </div>
 
 <!-- balloons -->
 
 <div class="balloon" style="left:10%">🎈</div>
-<div class="balloon" style="left:30%;animation-delay:2s;">🎈</div>
-<div class="balloon" style="left:50%;animation-delay:4s;">🎈</div>
-<div class="balloon" style="left:70%;animation-delay:1s;">🎈</div>
-<div class="balloon" style="left:90%;animation-delay:3s;">🎈</div>
+<div class="balloon" style="left:40%">🎈</div>
+<div class="balloon" style="left:70%">🎈</div>
 
-<!-- hearts -->
+<h2>🎮 Catch the Cake Game</h2>
 
-<div class="heart" style="left:20%">❤️</div>
-<div class="heart" style="left:40%;animation-delay:2s;">💖</div>
-<div class="heart" style="left:60%;animation-delay:3s;">💗</div>
-<div class="heart" style="left:80%;animation-delay:1s;">💘</div>
+Score: <span id="score">0</span>
 
-<!-- music -->
+<div id="gameArea">
+<div id="cakeGame">🎂</div>
+</div>
 
 <audio autoplay loop>
 <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
@@ -164,10 +131,42 @@ soo once again happy birthday pyari jaggu ❤️🤝🥳
 
 <script>
 
+/* message */
+
 function showMessage(){
 document.getElementById("message").style.display="block";
-confettiExplosion();
 }
+
+/* GAME */
+
+let score = 0;
+const cake = document.getElementById("cakeGame");
+const gameArea = document.getElementById("gameArea");
+
+function moveCake(){
+
+let x = Math.random() * (gameArea.clientWidth - 60);
+let y = Math.random() * (gameArea.clientHeight - 60);
+
+cake.style.left = x + "px";
+cake.style.top = y + "px";
+
+}
+
+cake.onclick = function(){
+
+score++;
+document.getElementById("score").innerText = score;
+
+if(score == 10){
+alert("🎉 Happy Birthday Jaggu! You win!");
+}
+
+moveCake();
+
+};
+
+setInterval(moveCake,1200);
 
 /* fireworks */
 
@@ -180,54 +179,51 @@ canvas.height = window.innerHeight;
 let particles=[];
 
 function createFirework(){
-for(let i=0;i<70;i++){
+
+for(let i=0;i<60;i++){
+
 particles.push({
+
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-vx:(Math.random()-0.5)*7,
-vy:(Math.random()-0.5)*7,
-life:100,
-color:`hsl(${Math.random()*360},100%,60%)`
+vx:(Math.random()-0.5)*6,
+vy:(Math.random()-0.5)*6,
+life:100
+
 });
+
 }
+
 }
 
 function update(){
+
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 particles.forEach((p,i)=>{
+
 p.x+=p.vx;
 p.y+=p.vy;
 p.life--;
 
-ctx.fillStyle=p.color;
-ctx.fillRect(p.x,p.y,4,4);
+ctx.fillStyle="white";
+ctx.fillRect(p.x,p.y,3,3);
 
 if(p.life<=0){
+
 particles.splice(i,1);
+
 }
+
 });
 
 requestAnimationFrame(update);
+
 }
 
-setInterval(createFirework,800);
+setInterval(createFirework,900);
+
 update();
-
-/* confetti */
-
-function confettiExplosion(){
-for(let i=0;i<200;i++){
-particles.push({
-x:window.innerWidth/2,
-y:window.innerHeight/2,
-vx:(Math.random()-0.5)*10,
-vy:(Math.random()-0.5)*10,
-life:120,
-color:`hsl(${Math.random()*360},100%,60%)`
-});
-}
-}
 
 </script>
 
