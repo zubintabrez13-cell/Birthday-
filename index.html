@@ -2,37 +2,63 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Happy Birthday Jaggu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
+font-family:'Poppins',sans-serif;
 text-align:center;
-font-family:Arial;
-background:linear-gradient(45deg,#ff758c,#ff7eb3);
 color:white;
 overflow-x:hidden;
+background:linear-gradient(45deg,#0f2027,#203a43,#2c5364);
 }
 
-/* TITLE */
+/* galaxy stars */
 
-.name{
-font-size:10vw;
-font-weight:bold;
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(white 1px, transparent 1px);
+background-size:40px 40px,80px 80px;
+opacity:0.4;
+animation:moveStars 80s linear infinite;
+z-index:-1;
+}
+
+@keyframes moveStars{
+from{transform:translateY(0);}
+to{transform:translateY(-2000px);}
+}
+
+/* title */
+
+.title{
+font-family:'Pacifico',cursive;
+font-size:60px;
 margin-top:20px;
-animation:glow 2s infinite alternate;
+color:#ffd1dc;
+text-shadow:0 0 20px pink;
 }
 
-@keyframes glow{
-from{ text-shadow:0 0 10px white,0 0 20px pink;}
-to{ text-shadow:0 0 20px yellow,0 0 40px orange;}
+.subtitle{
+font-size:25px;
 }
 
-/* CAKE */
+/* cake */
 
 .cake{
-font-size:20vw;
+font-size:120px;
 cursor:pointer;
 animation:bounce 2s infinite;
 }
@@ -43,86 +69,64 @@ animation:bounce 2s infinite;
 100%{transform:translateY(0)}
 }
 
-/* GIFT */
+/* mario game */
 
-.gift{
-font-size:18vw;
-cursor:pointer;
-}
-
-#message{
-display:none;
-font-size:4vw;
-padding:20px;
-}
-
-/* BALLOONS */
-
-.balloon{
-position:absolute;
-bottom:-150px;
-font-size:40px;
-animation:float 10s infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-100%{transform:translateY(-120vh)}
-}
-
-/* GAME */
-
-#gameArea{
+#game{
 width:90%;
-height:250px;
-margin:auto;
+height:220px;
 border:3px dashed white;
-position:relative;
-border-radius:20px;
-}
-
-#cakeGame{
-position:absolute;
-font-size:50px;
-cursor:pointer;
-}
-
-/* BALLOON POP GAME */
-
-#balloonGame{
-font-size:50px;
-margin-top:20px;
-}
-
-.popBalloon{
-cursor:pointer;
-margin:10px;
-}
-
-/* SECRET MESSAGE */
-
-#secretMessage{
-display:none;
-font-size:20px;
-max-width:600px;
 margin:auto;
-padding:20px;
+position:relative;
+overflow:hidden;
+border-radius:20px;
+background:#1e3c72;
 }
 
-/* HEARTS */
-
-@keyframes heartRise{
-0%{transform:translateY(0);}
-100%{transform:translateY(-100vh);}
+#mario{
+font-size:45px;
+position:absolute;
+bottom:0;
+left:40px;
 }
 
-/* FIREWORKS */
+#pipe{
+font-size:50px;
+position:absolute;
+bottom:0;
+right:-60px;
+animation:pipeMove 3s infinite linear;
+}
 
-canvas{
+@keyframes pipeMove{
+0%{right:-60px}
+100%{right:100%}
+}
+
+/* jump */
+
+.jump{
+animation:jump 0.6s;
+}
+
+@keyframes jump{
+0%{bottom:0}
+50%{bottom:100px}
+100%{bottom:0}
+}
+
+/* confetti */
+
+.confetti{
 position:fixed;
-top:0;
-left:0;
-pointer-events:none;
+width:8px;
+height:8px;
+top:-10px;
+animation:fall 3s linear;
+}
+
+@keyframes fall{
+0%{transform:translateY(0)}
+100%{transform:translateY(100vh)}
 }
 
 </style>
@@ -130,217 +134,98 @@ pointer-events:none;
 
 <body>
 
-<div class="name">🎉 Jaggu 🎉</div>
-<h2>Happy Birthday</h2>
+<div class="title">🎉 Happy Birthday Jaggu 🎉</div>
+<div class="subtitle">Independent Girl – Keep Shining ✨</div>
 
-<!-- CAKE -->
+<div class="cake" onclick="confetti()">🎂</div>
 
-<div class="cake" onclick="cutCake()" id="cake">🎂</div>
-<p id="cakeText">Click the cake to cut it 🎂</p>
+<p>Click cake for celebration 🎊</p>
 
-<!-- GIFT -->
+<h2>🎮 Mario Birthday Game</h2>
+<p>Press SPACE to jump</p>
 
-<p>Click the gift 🎁</p>
-<div class="gift" onclick="showMessage()">🎁</div>
+<div id="game">
 
-<div id="message">
+<div id="mario">🧑‍🔧</div>
 
-Happy Birthday Jaggu ❤️  
-You are amazing and I wish all your dreams come true.  
-Stay cool, stay awesome and keep smiling always 🎉
+<div id="pipe">🧱</div>
 
 </div>
 
-<!-- BALLOONS -->
-
-<div class="balloon" style="left:10%">🎈</div>
-<div class="balloon" style="left:40%">🎈</div>
-<div class="balloon" style="left:70%">🎈</div>
-
-<!-- MINI GAME -->
-
-<h2>🎮 Catch the Cake Game</h2>
-Score: <span id="score">0</span>
-
-<div id="gameArea">
-<div id="cakeGame">🎂</div>
-</div>
-
-<!-- BALLOON POP GAME -->
-
-<h2>🎈 Pop the Balloons</h2>
-
-<div id="balloonGame">
-<span class="popBalloon" onclick="pop(this)">🎈</span>
-<span class="popBalloon" onclick="pop(this)">🎈</span>
-<span class="popBalloon" onclick="pop(this)">🎈</span>
-<span class="popBalloon" onclick="pop(this)">🎈</span>
-</div>
-
-<!-- SECRET SURPRISE -->
-
-<h2>🎁 Secret Surprise</h2>
-
-<button onclick="openSecret()" style="font-size:18px;padding:10px 20px;border:none;border-radius:10px;background:white;color:#ff4e8a;">
-Open Secret
-</button>
-
-<div id="secretMessage">
-
-💌 Dear Jaggu,
-
-Talking to you is always interesting and fun.  
-You are smart, cool and unique in your own way.
-
-I hope this birthday brings happiness, success  
-and everything you dream of.
-
-✨ Happy Birthday Jaggu ✨
-
-— From Zubin
-
-</div>
-
-<!-- MUSIC -->
-
-<audio autoplay loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-</audio>
-
-<!-- FIREWORKS -->
-
-<canvas id="fireworks"></canvas>
+<h3 id="score">Score: 0</h3>
 
 <script>
 
-/* CAKE CUTTING */
+let mario=document.getElementById("mario")
+let pipe=document.getElementById("pipe")
+let score=0
 
-function cutCake(){
-document.getElementById("cake").innerHTML="🍰";
-document.getElementById("cakeText").innerHTML="🎉 Cake Cut! Happy Birthday!";
+document.addEventListener("keydown",function(e){
+
+if(e.code=="Space"){
+jump()
 }
 
-/* GIFT MESSAGE */
+})
 
-function showMessage(){
-document.getElementById("message").style.display="block";
-}
+function jump(){
 
-/* CAKE GAME */
+if(mario.classList!="jump"){
+mario.classList.add("jump")
 
-let score=0;
-const cake=document.getElementById("cakeGame");
-const gameArea=document.getElementById("gameArea");
-
-function moveCake(){
-
-let x=Math.random()*(gameArea.clientWidth-60);
-let y=Math.random()*(gameArea.clientHeight-60);
-
-cake.style.left=x+"px";
-cake.style.top=y+"px";
-
-}
-
-cake.onclick=function(){
-
-score++;
-document.getElementById("score").innerText=score;
-
-if(score==10){
-alert("🎉 You Win! Happy Birthday Jaggu!");
-}
-
-moveCake();
-
-}
-
-setInterval(moveCake,1200);
-
-/* BALLOON POP */
-
-function pop(balloon){
-balloon.innerHTML="💥";
-}
-
-/* SECRET MESSAGE */
-
-function openSecret(){
-
-document.getElementById("secretMessage").style.display="block";
-
-for(let i=0;i<20;i++){
-
-let heart=document.createElement("div");
-
-heart.innerHTML="❤️";
-heart.style.position="fixed";
-heart.style.left=Math.random()*100+"vw";
-heart.style.top="100vh";
-heart.style.fontSize="30px";
-heart.style.animation="heartRise 4s linear";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),4000);
+setTimeout(function(){
+mario.classList.remove("jump")
+},600)
 
 }
 
 }
 
-/* FIREWORKS */
+/* game loop */
 
-const canvas=document.getElementById("fireworks");
-const ctx=canvas.getContext("2d");
+setInterval(function(){
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+let marioTop=parseInt(window.getComputedStyle(mario).getPropertyValue("bottom"))
 
-let particles=[];
+let pipeLeft=parseInt(window.getComputedStyle(pipe).getPropertyValue("right"))
 
-function createFirework(){
+if(pipeLeft>450 && pipeLeft<500 && marioTop<40){
 
-for(let i=0;i<60;i++){
+alert("Game Over 🎮 Score: "+score)
 
-particles.push({
+score=0
 
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-vx:(Math.random()-0.5)*6,
-vy:(Math.random()-0.5)*6,
-life:100
+}
 
-});
+else{
+
+score++
+document.getElementById("score").innerHTML="Score: "+score
+
+}
+
+},10)
+
+/* confetti */
+
+function confetti(){
+
+for(let i=0;i<120;i++){
+
+let c=document.createElement("div")
+
+c.classList.add("confetti")
+
+c.style.left=Math.random()*100+"vw"
+c.style.background=`hsl(${Math.random()*360},100%,50%)`
+
+document.body.appendChild(c)
+
+setTimeout(()=>c.remove(),3000)
 
 }
 
 }
-
-function update(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-particles.forEach((p,i)=>{
-
-p.x+=p.vx;
-p.y+=p.vy;
-p.life--;
-
-ctx.fillStyle="white";
-ctx.fillRect(p.x,p.y,3,3);
-
-if(p.life<=0){
-particles.splice(i,1);
-}
-
-});
-
-requestAnimationFrame(update);
-
-}
-
-setInterval(createFirework,900);
-update();
 
 </script>
 
