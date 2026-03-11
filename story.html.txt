@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Story</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+background:black;
+color:white;
+font-family:Poppins;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+}
+
+.story{
+width:90%;
+max-width:400px;
+background:#111;
+padding:30px;
+border-radius:20px;
+}
+
+.slide{
+display:none;
+font-size:24px;
+}
+
+.active{
+display:block;
+}
+
+button{
+margin-top:20px;
+padding:12px 25px;
+border:none;
+border-radius:20px;
+background:#ff4e8a;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="story">
+
+<div class="slide active">✨ Jaggu's Special Day</div>
+
+<div class="slide">💪 Independent Girl</div>
+
+<div class="slide"> bandariyaa </div>
+
+<div class="slide">🎉 Ready for your surprise?</div>
+
+<button onclick="nextSlide()">Next</button>
+
+</div>
+
+<script>
+
+let slide=0
+
+function nextSlide(){
+
+let slides=document.querySelectorAll(".slide")
+
+slides[slide].classList.remove("active")
+
+slide++
+
+if(slide>=slides.length){
+
+window.location.href="birthday.html"
+
+}
+
+else{
+
+slides[slide].classList.add("active")
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

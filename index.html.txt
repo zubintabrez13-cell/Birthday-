@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Countdown</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:'Poppins',sans-serif;
+color:white;
+text-align:center;
+background:linear-gradient(45deg,#0f2027,#203a43,#2c5364);
+}
+
+h1{
+font-family:'Pacifico';
+font-size:60px;
+}
+
+#count{
+font-size:70px;
+}
+
+button{
+padding:15px 30px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#ff4e8a;
+color:white;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🎁 Surprise for Jaggu</h1>
+
+<p>Opening in...</p>
+
+<div id="count">5</div>
+
+<button onclick="openStory()">Skip</button>
+
+<script>
+
+let n=5
+
+setInterval(function(){
+
+n--
+
+document.getElementById("count").innerText=n
+
+if(n==0){
+window.location.href="story.html"
+}
+
+},1000)
+
+function openStory(){
+window.location.href="story.html"
+}
+
+</script>
+
+</body>
+</html>
