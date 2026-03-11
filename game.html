@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cute Birthday Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jaggu's Jump Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
     <style>
         body {
@@ -17,30 +17,173 @@
             justify-content: center;
             height: 100vh;
             overflow: hidden;
+            touch-action: manipulation;
         }
-        h2 { color: #ff6b9d; margin: 10px 0; }
-        .score { font-size: 24px; color: #ff85a2; margin-bottom: 10px; font-weight: bold; }
+        h2 { color: #ff6b9d; margin: 10px 0; font-size: 1.5rem; }
+        .score { font-size: 20px; color: #ff85a2; margin-bottom: 10px; }
+        
+        #gameContainer {
+            position: relative;
+            width: 95%;
+            max-width: 500px;
+        }
+
         canvas {
             background: #ffffff;
-            width: 90%;
-            max-width: 500px;
-            border: 5px solid #ffdeeb;
+            width: 100%;
+            border: 4px solid #ffdeeb;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
-            touch-action: none; /* Prevents scrolling while playing */
+            display: block;
         }
-        .instruction { color: #aaa; font-size: 0.9rem; margin-top: 10px; }
+
+        .tap-zone {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 5;
+        }
+
+        .btn-restart {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #ff85a2;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            display: none;
+            font-family: 'Pangolin', cursive;
+        }
     </style>
 </head>
 <body>
 
-    <h2>🧸 Jaggu's Jump Adventure</h2>
-    <div class="score">Score: <span id="score">0</span> / 10</div>
+    <h2>🧸 Jaggu's Adventure</h2>
+    <div class="score">Score: <span id="scoreVal">0</span> / 10</div>
     
-    <canvas id="game" width="500" height="220"></canvas>
+    <div id="gameContainer">
+        <div class="tap-zone" id="tapZone"></div>
+        <canvas id="gameCanvas" width="500" height="250"></canvas>
+    </div>
     
-    <p class="instruction">Tap or Press Space to Jump! ✨</p>
+    <button class="btn-restart" id="restartBtn" onclick="resetGame()">Try Again! ✨</button>
+    <p style="color: #aaa; font-size: 0.8rem; margin-top: 10px;">Tap anywhere to jump!</p>
 
-    <script src="script.js"></script>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreVal = document.getElementById("scoreVal");
+        const restartBtn = document.getElementById("restartBtn");
+
+        let score = 0;
+        let isGameOver = false;
+        let animationId;
+
+        const player = {
+            x: 50, y: 180, w: 40, h: 40,
+            dy: 0, jump: -12, gravity: 0.8, grounded: false
+        };
+
+        const obstacle = { x: 500, y: 190, w: 30, h: 30, speed: 5 };
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Ground
+            ctx.strokeStyle = "#ffdeeb";
+            ctx.beginPath();
+            ctx.moveTo(0, 220);
+            ctx.lineTo(500, 220);
+            ctx.stroke();
+
+            // Draw Player (Jaggu)
+            ctx.fillStyle = "#ff85a2";
+            ctx.beginPath();
+            ctx.roundRect(player.x, player.y, player.w, player.h, 10);
+            ctx.fill();
+
+            // Draw Obstacle (Cake/Spike)
+            ctx.fillStyle = "#ffb6c1";
+            ctx.beginPath();
+            ctx.moveTo(obstacle.x, obstacle.y + obstacle.h);
+            ctx.lineTo(obstacle.x + obstacle.w/2, obstacle.y);
+            ctx.lineTo(obstacle.x + obstacle.w, obstacle.y + obstacle.h);
+            ctx.fill();
+        }
+
+        function update() {
+            if (isGameOver) return;
+
+            player.dy += player.gravity;
+            player.y += player.dy;
+
+            if (player.y + player.h > 220) {
+                player.y = 220 - player.h;
+                player.dy = 0;
+                player.grounded = true;
+            }
+
+            obstacle.x -= obstacle.speed;
+            if (obstacle.x < -30) {
+                obstacle.x = 550;
+                score++;
+                scoreVal.innerHTML = score;
+                if (score >= 10) win();
+            }
+
+            // Collision
+            if (player.x < obstacle.x + obstacle.w &&
+                player.x + player.w > obstacle.x &&
+                player.y < obstacle.y + obstacle.h &&
+                player.y + player.h > obstacle.y) {
+                endGame();
+            }
+
+            draw();
+            animationId = requestAnimationFrame(update);
+        }
+
+        function jump() {
+            if (player.grounded && !isGameOver) {
+                player.dy = player.jump;
+                player.grounded = false;
+            }
+        }
+
+        function endGame() {
+            isGameOver = true;
+            cancelAnimationFrame(animationId);
+            restartBtn.style.display = "block";
+            ctx.fillStyle = "rgba(255,255,255,0.7)";
+            ctx.fillRect(0,0,500,250);
+            ctx.fillStyle = "#ff4e8a";
+            ctx.font = "30px Pangolin";
+            ctx.fillText("Game Over! 🌸", 160, 120);
+        }
+
+        function win() {
+            isGameOver = true;
+            cancelAnimationFrame(animationId);
+            ctx.fillStyle = "white";
+            ctx.fillRect(0,0,500,250);
+            ctx.fillStyle = "#ff4e8a";
+            ctx.font = "25px Pangolin";
+            ctx.fillText("You Won! 🎉 Click Enter below!", 100, 120);
+            setTimeout(() => { window.location.href = "birthday.html"; }, 2000);
+        }
+
+        function resetGame() {
+            location.reload();
+        }
+
+        // Mobile & Desktop Controls
+        document.getElementById("tapZone").addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            jump();
+        });
+        document.addEventListener("mousedown", jump);
+        document.addEventListener("keydown", (e) => { if(e.code === "Space") jump(); });
+
+        update();
+    </script>
 </body>
 </html>
