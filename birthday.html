@@ -3,54 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Jaggu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Happy Birthday Jaggu!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&family=Pacifico&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff6b9d;
+            --soft-pink: #fff0f6;
+            --accent-pink: #ff85a2;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--soft-pink);
+            font-family: 'Pangolin', cursive;
+            color: #444;
+            overflow-x: hidden;
+        }
+
+        /* Magical Floating Petals */
+        .petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .petal {
+            position: absolute;
+            background: #ffb6c1;
+            border-radius: 150% 0 150% 0;
+            opacity: 0.6;
+            animation: drift 10s infinite linear;
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+            100% { transform: translateY(110vh) translateX(100px) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary-pink);
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0px white;
+            margin-bottom: 5px;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Interactive Items */
+        .interact-box {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .circle-btn {
+            background: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 15px rgba(255, 107, 157, 0.2);
+            cursor: pointer;
+            transition: 0.3s;
+            border: 3px solid #ffe3ed;
+        }
+
+        .circle-btn:active { transform: scale(0.9); }
+        .circle-btn span { font-size: 2rem; }
+        .circle-btn label { font-size: 0.7rem; color: var(--accent-pink); font-weight: bold; }
+
+        /* The Main Letter */
+        .letter-card {
+            background: white;
+            width: 95%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.15);
+            border: 8px solid white;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .letter-card::before {
+            content: "💌";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+        }
+
+        .message-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: left;
+        }
+
+        .message-content p {
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 3px solid var(--soft-pink);
+        }
+
+        .highlight {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-pink);
+            font-size: 1.5rem;
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--accent-pink);
+            font-style: italic;
+        }
+
+        /* Hidden Confetti Canvas */
+        #confetti {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
 </head>
 <body>
 
-<div class="stars"></div>
+    <canvas id="confetti"></canvas>
+    <div class="petals-container" id="petals"></div>
 
-<div class="container">
-    <h1 class="bounce">🎉 Happy Birthday Jaggu! 🎉</h1>
+    <div class="container">
+        <header>
+            <h1>Happy Birthday!</h1>
+            <p style="text-align:center; color: #ff85a2;">✨ To the most special Jaggu ✨</p>
+        </header>
 
-    <div class="interactive-section">
-        <div class="item-box">
-            <div class="cake" onclick="cutCake()">🎂</div>
-            <p>Tap to Cut</p>
-        </div>
-        <div class="item-box">
-            <div class="gift" onclick="openGift()">🎁</div>
-            <p>Tap to Open</p>
-        </div>
-    </div>
-
-    <div class="card-container" id="mainCard">
-        <div class="message-card">
-            <div class="scroll-area">
-                <p>Happy Birthday tuahera huuh, ab kya bole🫨, tumhe to khush hona chahiye you got me by your side...😮‍💨😉</p>
-                <p>The goat, the legend, the zubin...😎🫢</p>
-                <p>Kabhi itna cool banda dekhi ho ?? 😎😎</p>
-                <p>Jokes apart😌 so, ive never met you i don't know tum kesi ho, kesi dikhti ho, kya ho tum bass i guess angel priya na ho.. 🙃🤧</p>
-                <p>To be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakwass hoti hai but i like it.</p>
-                <p>Tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠</p>
-                <p>Urge to know about every single pinch of your life..!! 🫠🫠</p>
-                <p>Ye sab to theek hai one more thing you are awesome ive never met topper like you before jo itna cool ho.</p>
-                <p><b>Tum perfect tum best ho 🫡🫶🫵💪</b></p>
-                <p>I wish all your dreams come true orr tum ek bohot respectful or independent women Bano...🥰☺️</p>
-                <p>Doesn't matter tum doctor bano ya na bano tum best krogi apni life mei...!!! 😇☺️☺️</p>
-                <p style="font-size: 1.5rem; color: #ff4e8a;">Soo once again happy birthday pyari jaggu 🫂🥰🥳</p>
+        <div class="interact-box">
+            <div class="circle-btn" onclick="celebrate()">
+                <span>🎂</span>
+                <label>Cake</label>
+            </div>
+            <div class="circle-btn" onclick="openGift()">
+                <span>🎁</span>
+                <label>Gift</label>
             </div>
         </div>
+
+        <div class="letter-card">
+            <div class="message-content">
+                <p>Happy Birthday tuahera huuh, ab kya bole🫨, tumhe to khush hona chahiye you got me by your side... 😮‍💨😉</p>
+                
+                <p>The goat the legend the zubin... 😎🫢<br>
+                kabhi itna cool banda dekhi ho ?? 😎😎</p>
+
+                <p>Jokes apart😌 so, ive never met you i don't know tum kesi ho, kesi dikhti ho, kya ho tum bass i guess angel priya na ho.. 🙃🤧</p>
+
+                <p>To be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakwass hoti hai but i like it...</p>
+
+                <span class="highlight">"Tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠"</span>
+
+                <p>Urge to know about every single pinch of your life..!! 🫠🫠</p>
+
+                <p>Ye sab to theek hai one more thing you are awesome ive never met topper like you before jo itna cool ho.</p>
+
+                <p><b>Tum perfect tum best ho 🫡🫶🫵💪</b></p>
+
+                <p>I wish all your dreams come true orr tum ek bohot respectful or independent women Bano... 🥰☺️</p>
+
+                <p>Doesn't matter tum doctor bano ya na bano tum best krogi apni life mei...!!! 😇☺️☺️</p>
+
+                <span class="highlight" style="font-size: 1.8rem;">Soo once again happy birthday pyari jaggu 🫂🥰🥳</span>
+            </div>
+        </div>
+
+        <footer>Made with 💖 by Zubin</footer>
     </div>
-</div>
 
-<canvas id="fireworks"></canvas>
+    <audio id="mySong" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
-<audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
+    <script>
+        // 1. Create floating petals
+        const petalsContainer = document.getElementById('petals');
+        for (let i = 0; i < 15; i++) {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.width = Math.random() * 15 + 10 + 'px';
+            petal.style.height = petal.style.width;
+            petal.style.animationDelay = Math.random() * 5 + 's';
+            petalsContainer.appendChild(petal);
+        }
 
-<script src="script.js"></script>
+        // 2. Interaction Logic
+        function celebrate() {
+            alert("🎂 Cake is cut! Now Jaggu owes Zubin a treat! 😋");
+            startConfetti();
+            playMusic();
+        }
+
+        function openGift() {
+            alert("🎁 You opened the gift! It's a lifetime of annoying jokes from Zubin! 😂💖");
+            startConfetti();
+            playMusic();
+        }
+
+        function playMusic() {
+            const audio = document.getElementById('mySong');
+            audio.play().catch(() => console.log("Music ready after tap!"));
+        }
+
+        // 3. Simple Confetti Effect
+        function startConfetti() {
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particles = [];
+            for(let i=0; i<80; i++) {
+                particles.push({
+                    x: Math.random()*canvas.width,
+                    y: Math.random()*canvas.height - canvas.height,
+                    size: Math.random()*8+4,
+                    color: `hsl(${Math.random()*360}, 100%, 70%)`,
+                    vel: Math.random()*3+2
+                });
+            }
+            function fall() {
+                ctx.clearRect(0,0,canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.y += p.vel;
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(p.x, p.y, p.size, p.size);
+                });
+                if(particles[0].y < canvas.height) requestAnimationFrame(fall);
+            }
+            fall();
+        }
+    </script>
 </body>
 </html>
