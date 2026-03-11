@@ -1,53 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Cute Birthday Game</title>
-
-<style>
-
-body{
-margin:0;
-text-align:center;
-font-family:"Comic Sans MS", cursive;
-background:linear-gradient(#ffd6e7,#fff);
-}
-
-h2{
-color:#ff4e8a;
-}
-
-canvas{
-background:white;
-width:95%;
-max-width:500px;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-
-.score{
-font-size:20px;
-margin-top:10px;
-color:#ff4e8a;
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Birthday Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            text-align: center;
+            font-family: 'Pangolin', cursive;
+            background: #fff0f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h2 { color: #ff6b9d; margin: 10px 0; }
+        .score { font-size: 24px; color: #ff85a2; margin-bottom: 10px; font-weight: bold; }
+        canvas {
+            background: #ffffff;
+            width: 90%;
+            max-width: 500px;
+            border: 5px solid #ffdeeb;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
+            touch-action: none; /* Prevents scrolling while playing */
+        }
+        .instruction { color: #aaa; font-size: 0.9rem; margin-top: 10px; }
+    </style>
 </head>
-
 <body>
 
-<h2>🧸 Cute Birthday Jump Game</h2>
+    <h2>🧸 Jaggu's Jump Adventure</h2>
+    <div class="score">Score: <span id="score">0</span> / 10</div>
+    
+    <canvas id="game" width="500" height="220"></canvas>
+    
+    <p class="instruction">Tap or Press Space to Jump! ✨</p>
 
-<p>Tap screen to jump</p>
-
-<div class="score">Score: <span id="score">0</span></div>
-
-<canvas id="game" width="500" height="220"></canvas>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
