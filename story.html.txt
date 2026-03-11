@@ -60,7 +60,7 @@ color:white;
 
 <div class="slide">💪 Independent Girl</div>
 
-<div class="slide"> bandariyaa </div>
+<div class="slide">👩‍⚕️ Future Topper</div>
 
 <div class="slide">🎉 Ready for your surprise?</div>
 
