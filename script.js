@@ -1,132 +1,50 @@
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-const scoreElement = document.getElementById("score");
-
-let score = 0;
-let gameSpeed = 3;
-let isGameOver = false;
-
-// Character Object
-const jaggu = {
-    x: 50,
-    y: 170,
-    width: 40,
-    height: 40,
-    color: "#ff85a2",
-    dy: 0,
-    jumpForce: 12,
-    gravity: 0.6,
-    grounded: false
-};
-
-// Obstacle Object
-const obstacle = {
-    x: 550,
-    y: 180,
-    width: 30,
-    height: 30,
-    color: "#ffdae0"
-};
-
-function drawJaggu() {
-    // Draw a cute rounded square for Jaggu
-    ctx.fillStyle = jaggu.color;
-    ctx.beginPath();
-    ctx.roundRect(jaggu.x, jaggu.y, jaggu.width, jaggu.height, 10);
-    ctx.fill();
-    // Eyes
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.arc(jaggu.x + 30, jaggu.y + 15, 4, 0, Math.PI * 2);
-    ctx.fill();
+function cutCake() {
+    const cake = document.querySelector('.cake');
+    cake.innerHTML = "🍰"; // Changes to a slice
+    alert("Yum! Jaggu just ate a slice! 🎂✨");
+    startFireworks(); // Trigger celebration!
 }
 
-function drawObstacle() {
-    ctx.fillStyle = "#ffb6c1";
-    ctx.beginPath();
-    // Draw a little "cake" or triangle
-    ctx.moveTo(obstacle.x, obstacle.y + obstacle.height);
-    ctx.lineTo(obstacle.x + obstacle.width / 2, obstacle.y);
-    ctx.lineTo(obstacle.x + obstacle.width, obstacle.y + obstacle.height);
-    ctx.fill();
+function openGift() {
+    const gift = document.querySelector('.gift');
+    gift.innerHTML = "💎"; // Or 💍 or 🧸
+    alert("A special shiny gem for a special topper! 🎁💖");
+    
+    // Play music if it was blocked by browser
+    const music = document.getElementById('bgMusic');
+    music.play().catch(() => console.log("User needs to interact first"));
 }
 
-function update() {
-    if (isGameOver) return;
+// Simple Fireworks for Mobile performance
+function startFireworks() {
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Gravity and Physics
-    jaggu.dy += jaggu.gravity;
-    jaggu.y += jaggu.dy;
-
-    if (jaggu.y + jaggu.height > 210) {
-        jaggu.y = 210 - jaggu.height;
-        jaggu.dy = 0;
-        jaggu.grounded = true;
+    let particles = [];
+    for(let i=0; i<50; i++) {
+        particles.push({
+            x: canvas.width/2,
+            y: canvas.height/2,
+            vx: Math.random()*10 - 5,
+            vy: Math.random()*10 - 5,
+            color: `hsl(${Math.random()*360}, 100%, 70%)`
+        });
     }
 
-    // Move Obstacle
-    obstacle.x -= gameSpeed;
-    if (obstacle.x < -obstacle.width) {
-        obstacle.x = 550;
-        score++;
-        scoreElement.innerHTML = score;
-        
-        // Win Condition
-        if (score === 10) {
-            victory();
-        }
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.1; // gravity
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+            ctx.fill();
+        });
+        if(particles[0].y < canvas.height) requestAnimationFrame(animate);
     }
-
-    // Collision Detection
-    if (
-        jaggu.x < obstacle.x + obstacle.width &&
-        jaggu.x + jaggu.width > obstacle.x &&
-        jaggu.y < obstacle.y + obstacle.height &&
-        jaggu.y + jaggu.height > obstacle.y
-    ) {
-        gameOver();
-    }
-
-    drawJaggu();
-    drawObstacle();
-    requestAnimationFrame(update);
+    animate();
 }
-
-function jump() {
-    if (jaggu.grounded && !isGameOver) {
-        jaggu.dy = -jaggu.jumpForce;
-        jaggu.grounded = false;
-    }
-    if (isGameOver) {
-        location.reload(); // Restart on tap if dead
-    }
-}
-
-function gameOver() {
-    isGameOver = true;
-    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#ff4e8a";
-    ctx.font = "30px Pangolin";
-    ctx.fillText("Oops! Try Again? 🎀", 130, 110);
-}
-
-function victory() {
-    isGameOver = true;
-    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#ff4e8a";
-    ctx.font = "30px Pangolin";
-    ctx.fillText("Yay! 10 Points! 🎉", 140, 110);
-    ctx.font = "20px Pangolin";
-    ctx.fillText("Happy Birthday Jaggu! 🎂", 145, 140);
-}
-
-// Controls
-window.addEventListener("keydown", (e) => { if (e.code === "Space") jump(); });
-canvas.addEventListener("touchstart", (e) => { e.preventDefault(); jump(); });
-canvas.addEventListener("mousedown", jump);
-
-update();
