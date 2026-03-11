@@ -2,50 +2,9 @@
 <html>
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Happy Birthday Jaggu</title>
 
-<style>
-
-body{
-margin:0;
-text-align:center;
-font-family:sans-serif;
-background:linear-gradient(45deg,#ff758c,#ff7eb3);
-color:white;
-}
-
-h1{
-font-size:60px;
-}
-
-.cake{
-font-size:120px;
-cursor:pointer;
-}
-
-.gift{
-font-size:110px;
-cursor:pointer;
-}
-
-.message{
-display:none;
-max-width:700px;
-margin:auto;
-padding:20px;
-line-height:1.6;
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -53,13 +12,23 @@ pointer-events:none;
 
 <h1>🎉 Happy Birthday Jaggu 🎉</h1>
 
-<div class="cake" onclick="fireworks()">🎂</div>
+<audio autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
 
-<p>Click cake for fireworks</p>
+<div class="story">
 
-<div class="gift" onclick="show()">🎁</div>
+<div class="slide">🥳 Welcome to your birthday universe</div>
 
-<p>Click gift for message</p>
+<div class="slide">🎂 Time to celebrate</div>
+
+<div class="slide">🎁 Open your gift</div>
+
+</div>
+
+<div class="cake" onclick="cutCake()">🎂</div>
+
+<div class="gift" onclick="openGift()">🎁</div>
 
 <div class="message" id="msg">
 
@@ -89,64 +58,9 @@ soo once again happy birthday pyari jaggu 🫂🥰🥳
 
 </div>
 
-<canvas id="fire"></canvas>
+<canvas id="fireworks"></canvas>
 
-<script>
-
-function show(){
-document.getElementById("msg").style.display="block"
-}
-
-const canvas=document.getElementById("fire")
-const ctx=canvas.getContext("2d")
-
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-
-let particles=[]
-
-function fireworks(){
-
-for(let i=0;i<80;i++){
-
-particles.push({
-
-x:canvas.width/2,
-y:canvas.height/2,
-vx:(Math.random()-0.5)*10,
-vy:(Math.random()-0.5)*10,
-life:100
-
-})
-
-}
-
-}
-
-function update(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-particles.forEach((p,i)=>{
-
-p.x+=p.vx
-p.y+=p.vy
-p.life--
-
-ctx.fillStyle="yellow"
-ctx.fillRect(p.x,p.y,3,3)
-
-if(p.life<=0)particles.splice(i,1)
-
-})
-
-requestAnimationFrame(update)
-
-}
-
-update()
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
