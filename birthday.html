@@ -6,22 +6,18 @@
 
 <title>Happy Birthday Jaggu</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-
 <style>
 
 body{
 margin:0;
-font-family:Poppins;
 text-align:center;
-color:white;
+font-family:sans-serif;
 background:linear-gradient(45deg,#ff758c,#ff7eb3);
+color:white;
 }
 
-.title{
-font-family:Pacifico;
+h1{
 font-size:60px;
-margin-top:30px;
 }
 
 .cake{
@@ -30,7 +26,7 @@ cursor:pointer;
 }
 
 .gift{
-font-size:100px;
+font-size:110px;
 cursor:pointer;
 }
 
@@ -39,20 +35,14 @@ display:none;
 max-width:700px;
 margin:auto;
 padding:20px;
-line-height:1.7;
+line-height:1.6;
 }
 
-.confetti{
+canvas{
 position:fixed;
-width:8px;
-height:8px;
-top:-10px;
-animation:fall 3s linear;
-}
-
-@keyframes fall{
-0%{transform:translateY(0)}
-100%{transform:translateY(100vh)}
+top:0;
+left:0;
+pointer-events:none;
 }
 
 </style>
@@ -61,15 +51,15 @@ animation:fall 3s linear;
 
 <body>
 
-<div class="title">🎉 Happy Birthday Jaggu 🎉</div>
+<h1>🎉 Happy Birthday Jaggu 🎉</h1>
 
-<div class="cake" onclick="confetti()">🎂</div>
+<div class="cake" onclick="fireworks()">🎂</div>
 
-<p>Click cake 🎊</p>
+<p>Click cake for fireworks</p>
 
-<div class="gift" onclick="showMessage()">🎁</div>
+<div class="gift" onclick="show()">🎁</div>
 
-<p>Click gift for message 💌</p>
+<p>Click gift for message</p>
 
 <div class="message" id="msg">
 
@@ -99,31 +89,62 @@ soo once again happy birthday pyari jaggu 🫂🥰🥳
 
 </div>
 
+<canvas id="fire"></canvas>
+
 <script>
 
-function showMessage(){
+function show(){
 document.getElementById("msg").style.display="block"
-confetti()
 }
 
-function confetti(){
+const canvas=document.getElementById("fire")
+const ctx=canvas.getContext("2d")
 
-for(let i=0;i<120;i++){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
-let c=document.createElement("div")
+let particles=[]
 
-c.classList.add("confetti")
+function fireworks(){
 
-c.style.left=Math.random()*100+"vw"
-c.style.background=`hsl(${Math.random()*360},100%,50%)`
+for(let i=0;i<80;i++){
 
-document.body.appendChild(c)
+particles.push({
 
-setTimeout(()=>c.remove(),3000)
+x:canvas.width/2,
+y:canvas.height/2,
+vx:(Math.random()-0.5)*10,
+vy:(Math.random()-0.5)*10,
+life:100
+
+})
 
 }
 
 }
+
+function update(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach((p,i)=>{
+
+p.x+=p.vx
+p.y+=p.vy
+p.life--
+
+ctx.fillStyle="yellow"
+ctx.fillRect(p.x,p.y,3,3)
+
+if(p.life<=0)particles.splice(i,1)
+
+})
+
+requestAnimationFrame(update)
+
+}
+
+update()
 
 </script>
 
