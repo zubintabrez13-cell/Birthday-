@@ -1,69 +1,64 @@
-function cutCake(){
+const canvas = document.getElementById("game")
+const ctx = canvas.getContext("2d")
 
-alert("Cake Cut 🎂")
+let player = {
+x:50,
+y:150,
+vy:0
+}
 
-launchFireworks()
+let gravity = 1
+
+let obstacle = {
+x:500
+}
+
+function jump(){
+
+if(player.y===150){
+player.vy=-15
+}
 
 }
 
-function openGift(){
-
-document.getElementById("msg").style.display="block"
-
-launchFireworks()
-
+document.addEventListener("keydown",e=>{
+if(e.code==="Space"){
+jump()
 }
-
-const canvas=document.getElementById("fireworks")
-
-if(canvas){
-
-const ctx=canvas.getContext("2d")
-
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-
-let particles=[]
-
-function launchFireworks(){
-
-for(let i=0;i<100;i++){
-
-particles.push({
-
-x:canvas.width/2,
-y:canvas.height/2,
-vx:(Math.random()-0.5)*10,
-vy:(Math.random()-0.5)*10,
-life:100
-
 })
 
+function draw(){
+
+ctx.clearRect(0,0,500,200)
+
+player.vy += gravity
+player.y += player.vy
+
+if(player.y>150){
+player.y=150
+player.vy=0
 }
 
+ctx.font="40px Arial"
+ctx.fillText("🧸",player.x,player.y)
+
+obstacle.x -=5
+
+ctx.fillText("🎂",obstacle.x,170)
+
+if(obstacle.x<0){
+obstacle.x=500
 }
 
-function update(){
+if(obstacle.x<80 && player.y>130){
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-particles.forEach((p,i)=>{
-
-p.x+=p.vx
-p.y+=p.vy
-p.life--
-
-ctx.fillStyle="yellow"
-ctx.fillRect(p.x,p.y,3,3)
-
-if(p.life<=0)particles.splice(i,1)
-
-})
-
-requestAnimationFrame(update)
+alert("🎉 Level Complete!")
+window.location.href="birthday.html"
 
 }
 
-update()
+requestAnimationFrame(draw)
 
 }
+
+draw()
