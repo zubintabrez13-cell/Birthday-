@@ -3,193 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Jaggu's Jump Game</title>
+    <title>Teddy Birthday Jump</title>
     <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
     <style>
-        /* --- ALL CSS INCLUDED HERE --- */
         body {
             margin: 0;
-            text-align: center;
+            padding: 0;
             font-family: 'Pangolin', cursive;
-            background: #fff0f6;
+            background: #fff0f6; /* Soft Blush Pink */
+            text-align: center;
+            overflow: hidden;
+            touch-action: none;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-            touch-action: none; /* Crucial for Android: prevents scrolling/bouncing */
         }
-        h2 { color: #ff6b9d; margin: 10px 0; font-size: 1.5rem; }
-        .score { font-size: 20px; color: #ff85a2; margin-bottom: 10px; font-weight: bold; }
+
+        /* The background floating flowers */
+        .flowers {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        .flowers span {
+            position: absolute; display: block;
+            animation: float 10s linear infinite;
+        }
+        /* Customizing flower appearance and speed */
+        .flowers span:nth-child(1) { left: 10%; animation-duration: 8s; font-size: 20px; }
+        .flowers span:nth-child(2) { left: 30%; animation-duration: 12s; font-size: 30px; animation-delay: 2s; }
+        .flowers span:nth-child(3) { left: 60%; animation-duration: 7s; font-size: 25px; animation-delay: 4s; }
+        .flowers span:nth-child(4) { left: 80%; animation-duration: 9s; font-size: 15px; animation-delay: 1s; }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        h2 { color: #ff6b9d; margin: 10px 0; font-size: 1.5rem; text-shadow: 2px 2px #ffe3ed; }
+        .score-board { font-size: 22px; color: #ff85a2; margin-bottom: 10px; font-weight: bold; background: white; padding: 5px 20px; border-radius: 50px; border: 2px solid #ffdeeb; }
         
-        #gameContainer {
+        #canvasContainer {
             position: relative;
-            width: 95vw;
-            max-width: 500px;
-            height: 250px;
+            width: 90vw;
+            max-width: 400px;
+            height: 200px;
             background: white;
-            border: 4px solid #ffdeeb;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
+            border: 5px solid #ffdeeb;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
             overflow: hidden;
         }
 
-        canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
+        canvas { display: block; width: 100%; height: 100%; }
 
-        .btn-restart {
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: #ff85a2;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Pangolin', cursive;
-            font-size: 1rem;
-            display: none; /* Only shows on Game Over */
-            cursor: pointer;
+        #jumpLabel { color: #888; font-size: 0.8rem; margin-top: 10px; }
+        .cute-btn { 
+            margin-top: 20px; padding: 10px 30px; background: #ff85a2; color: white; border: none; 
+            border-radius: 50px; font-family: 'Pangolin', cursive; display: none; cursor: pointer;
+            box-shadow: 0 5px 10px rgba(255,133,162,0.4); font-size: 1.2rem;
         }
+        .cute-btn:active { transform: scale(0.95); }
     </style>
 </head>
-<body onclick="jump()"> <h2>🧸 Jaggu's Adventure</h2>
-    <div class="score">Score: <span id="scoreVal">0</span> / 10</div>
+<body ontouchstart="jump()" onmousedown="jump()">
+
+    <div class="flowers">
+        <span>🌸</span><span>🌸</span><span>🌸</span><span>🌸</span>
+    </div>
+
+    <h2>🧸 Jaggu's Teddy Jump 🧸</h2>
+    <div class="score-board">Score: <span id="sVal">0</span> / 10</div>
     
-    <div id="gameContainer">
-        <canvas id="gameCanvas"></canvas>
+    <div id="canvasContainer">
+        <canvas id="gameCanvas" width="400" height="200"></canvas>
     </div>
     
-    <button class="btn-restart" id="restartBtn" onclick="resetGame(event)">Try Again! ✨</button>
-    <p id="hint" style="color: #aaa; font-size: 0.8rem; margin-top: 10px;">Tap anywhere to jump!</p>
+    <button class="cute-btn" id="rBtn" onclick="reset(event)">Try Again! ✨</button>
+    <p id="jumpLabel">Tap Screen to Help Teddy Jump!</p>
 
     <script>
-        /* --- ALL JAVASCRIPT INCLUDED HERE --- */
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
-        const scoreVal = document.getElementById("scoreVal");
-        const restartBtn = document.getElementById("restartBtn");
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        var sVal = document.getElementById("sVal");
+        var rBtn = document.getElementById("rBtn");
+        var jLbl = document.getElementById("jumpLabel");
 
-        // Adjust canvas resolution for sharp graphics
-        canvas.width = 500;
-        canvas.height = 250;
+        var score = 0;
+        var isLive = true;
+        var winPoints = 10;
 
-        let score = 0;
-        let isGameOver = false;
-        let gameActive = true;
-
-        const player = {
-            x: 50, y: 180, w: 40, h: 40,
-            dy: 0, jumpPower: -15, gravity: 0.8, grounded: false
+        // Player (Teddy Bear)
+        var t = {
+            x: 50, y: 140, w: 40, h: 40, // Match emoji bounding box
+            dy: 0, g: 0.7, jumpForce: -12, onG: false
         };
 
-        const obstacle = { x: 550, y: 190, w: 35, h: 35, speed: 6 };
+        // Obstacle (Birthday Cake)
+        var obs = { x: 450, y: 150, w: 30, h: 30, speed: 5 };
 
-        function update() {
-            if (!gameActive) return;
+        function jump() {
+            if (t.onG && isLive) {
+                t.dy = t.jumpForce;
+                t.onG = false;
+            }
+        }
 
-            // Physics
-            player.dy += player.gravity;
-            player.y += player.dy;
+        function gameLoop() {
+            if (!isLive) return;
 
-            // Ground Collision
-            if (player.y + player.h > 220) {
-                player.y = 220 - player.h;
-                player.dy = 0;
-                player.grounded = true;
+            // Physics (Gravity)
+            t.dy += t.g;
+            t.y += t.dy;
+
+            // Ground check (keeps Teddy on the line)
+            if (t.y > 140) {
+                t.y = 140;
+                t.dy = 0;
+                t.onG = true;
             }
 
-            // Obstacle Movement
-            obstacle.x -= obstacle.speed;
-            if (obstacle.x < -50) {
-                obstacle.x = 600;
+            // Move Cake (Obstacle)
+            obs.x -= obs.speed;
+            if (obs.x < -40) {
+                obs.x = 450;
                 score++;
-                scoreVal.innerHTML = score;
-                if (score >= 10) win();
+                sVal.innerHTML = score;
+                
+                // Win Condition
+                if (score >= winPoints) {
+                    victory();
+                    return; // Stop loop
+                }
             }
 
-            // Hit Detection
-            if (player.x < obstacle.x + obstacle.w - 5 &&
-                player.x + player.w - 5 > obstacle.x &&
-                player.y < obstacle.y + obstacle.h - 5 &&
-                player.y + player.h > obstacle.y) {
+            // Hit Detection (Simple collision)
+            if (t.x < obs.x + obs.w - 5 && 
+                t.x + t.w - 5 > obs.x && 
+                t.y < obs.y + obs.h - 5 && 
+                t.y + t.h > obs.y) {
                 gameOver();
+                return; // Stop loop
             }
 
             draw();
-            requestAnimationFrame(update);
+            requestAnimationFrame(gameLoop);
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Ground Line
+            // Draw Ground Line
             ctx.strokeStyle = "#ffdeeb";
             ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.moveTo(0, 220);
-            ctx.lineTo(500, 220);
+            ctx.moveTo(0, 180);
+            ctx.lineTo(400, 180);
             ctx.stroke();
 
-            // Player (Jaggu)
-            ctx.fillStyle = "#ff85a2";
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = "rgba(255,133,162,0.3)";
-            ctx.beginPath();
-            ctx.roundRect(player.x, player.y, player.w, player.h, 10);
-            ctx.fill();
-            ctx.shadowBlur = 0;
+            // Draw Teddy Bear (Player)
+            ctx.font = "40px Pangolin";
+            ctx.fillText("🧸", t.x, t.y + t.h); // Note:fillText draws from the bottom
 
-            // Obstacle (Cake)
-            ctx.fillStyle = "#ffb6c1";
-            ctx.beginPath();
-            ctx.arc(obstacle.x + 17, obstacle.y + 17, 17, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        function jump() {
-            if (player.grounded && gameActive) {
-                player.dy = player.jumpPower;
-                player.grounded = false;
-            }
+            // Draw Cake (Obstacle)
+            ctx.font = "30px Pangolin";
+            ctx.fillText("🎂", obs.x, obs.y + obs.h);
         }
 
         function gameOver() {
-            gameActive = false;
-            restartBtn.style.display = "block";
-            document.getElementById("hint").style.display = "none";
+            isLive = false;
+            rBtn.style.display = "block"; // Show restart button
+            jLbl.style.display = "none";
             
+            // Screen Overlay
             ctx.fillStyle = "rgba(255,255,255,0.8)";
-            ctx.fillRect(0,0,500,250);
+            ctx.fillRect(0,0,400,200);
+            
+            // Text
             ctx.fillStyle = "#ff4e8a";
-            ctx.font = "bold 30px Pangolin";
+            ctx.font = "bold 28px Pangolin";
             ctx.textAlign = "center";
-            ctx.fillText("Oops! Try Again? 🎀", 250, 125);
+            ctx.fillText("Oops! Try Again? 🌸", 200, 110);
         }
 
-        function win() {
-            gameActive = false;
+        function victory() {
+            isLive = false;
+            jLbl.style.display = "none";
+            
+            // Screen Overlay
             ctx.fillStyle = "white";
-            ctx.fillRect(0,0,500,250);
+            ctx.fillRect(0,0,400,200);
+            
+            // Text
             ctx.fillStyle = "#ff4e8a";
             ctx.font = "bold 24px Pangolin";
             ctx.textAlign = "center";
-            ctx.fillText("Yay! You reached 10! 🎉", 250, 110);
-            ctx.fillText("Opening your surprise...", 250, 150);
+            ctx.fillText("YAY! You helped Teddy! 🎉", 200, 100);
+            ctx.font = "20px Pangolin";
+            ctx.fillText("Opening the birthday message...", 200, 140);
             
-            setTimeout(() => {
+            // Redirect to birthday message after 2.5 seconds
+            setTimeout(function() {
                 window.location.href = "birthday.html";
-            }, 2000);
+            }, 2500);
         }
 
-        function resetGame(e) {
-            e.stopPropagation(); // Prevents jump() from firing when clicking restart
-            location.reload();
+        function reset(e) {
+            e.stopPropagation(); // Stop jump() from firing
+            location.reload(); // Restart page
         }
 
-        update();
+        // Start the game loop
+        gameLoop();
     </script>
 </body>
 </html>
