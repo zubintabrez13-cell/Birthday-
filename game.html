@@ -6,59 +6,31 @@
 
 <title>Cute Birthday Game</title>
 
-<link rel="stylesheet" href="style.css">
-
 <style>
 
 body{
 margin:0;
-padding:0;
 text-align:center;
 font-family:"Comic Sans MS", cursive;
-background:linear-gradient(180deg,#ffd6e7,#ffeef7);
-color:#ff4e8a;
-}
-
-.container{
-padding:20px;
+background:linear-gradient(#ffd6e7,#fff);
 }
 
 h2{
-font-size:26px;
-margin-bottom:5px;
-}
-
-p{
-font-size:16px;
+color:#ff4e8a;
 }
 
 canvas{
+background:white;
 width:95%;
 max-width:500px;
-height:auto;
-background:white;
 border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
-margin-top:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
-.jumpBtn{
-margin-top:20px;
-padding:15px 45px;
+.score{
 font-size:20px;
-border:none;
-border-radius:40px;
-background:#ff6fae;
-color:white;
-box-shadow:0 6px 15px rgba(0,0,0,0.2);
-}
-
-.jumpBtn:active{
-transform:scale(0.95);
-}
-
-.decor{
-font-size:40px;
+margin-top:10px;
+color:#ff4e8a;
 }
 
 </style>
@@ -67,33 +39,15 @@ font-size:40px;
 
 <body>
 
-<div class="container">
+<h2>🧸 Cute Birthday Jump Game</h2>
 
-<div class="decor">🧸🎀🌸</div>
+<p>Tap screen to jump</p>
 
-<h2>Cute Birthday Jump Game</h2>
+<div class="score">Score: <span id="score">0</span></div>
 
-<p>Tap anywhere or press the button to jump 🎂</p>
-
-<canvas id="game" width="500" height="250"></canvas>
-
-<br>
-
-<button class="jumpBtn" onclick="mobileJump()">Jump 🐰</button>
-
-</div>
+<canvas id="game" width="500" height="220"></canvas>
 
 <script src="script.js"></script>
-
-<script>
-
-function mobileJump(){
-document.dispatchEvent(new KeyboardEvent('keydown',{code:'Space'}))
-}
-
-document.addEventListener("touchstart",mobileJump)
-
-</script>
 
 </body>
 </html>
