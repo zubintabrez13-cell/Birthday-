@@ -2,9 +2,48 @@
 <html>
 <head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Birthday Game</title>
 
 <link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+margin:0;
+padding:0;
+text-align:center;
+font-family:sans-serif;
+background:#111;
+color:white;
+}
+
+h2{
+font-size:24px;
+margin-top:20px;
+}
+
+canvas{
+width:90%;
+max-width:600px;
+height:auto;
+background:#222;
+margin-top:20px;
+border-radius:10px;
+}
+
+.jumpBtn{
+margin-top:20px;
+padding:15px 40px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#ff4e8a;
+color:white;
+}
+
+</style>
 
 </head>
 
@@ -12,11 +51,23 @@
 
 <h2>🎮 Birthday Jump Game</h2>
 
-<p>Press SPACE to jump</p>
+<p>Tap button or press SPACE to jump</p>
 
 <canvas id="game" width="600" height="250"></canvas>
 
+<br>
+
+<button class="jumpBtn" onclick="mobileJump()">JUMP 🎂</button>
+
 <script src="script.js"></script>
+
+<script>
+
+function mobileJump(){
+document.dispatchEvent(new KeyboardEvent('keydown',{code:'Space'}))
+}
+
+</script>
 
 </body>
 </html>
