@@ -6,102 +6,27 @@
 
 <title>Jaggu Birthday</title>
 
-<style>
-
-body{
-margin:0;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-color:white;
-font-family:sans-serif;
-overflow:hidden;
-background:black;
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
-
-h1{
-font-size:60px;
-}
-
-button{
-padding:15px 35px;
-font-size:20px;
-border:none;
-border-radius:30px;
-background:#ff4e8a;
-color:white;
-cursor:pointer;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<canvas id="galaxy"></canvas>
+<div class="stars"></div>
 
-<h1>🌌 Jaggu Birthday Galaxy</h1>
+<div class="center">
 
-<p>Enter the Birthday Universe</p>
+<h1>🌌 Jaggu Birthday Universe</h1>
 
-<button onclick="go()">Start</button>
+<button onclick="start()">Enter</button>
+
+</div>
 
 <script>
 
-function go(){
-window.location.href="game.html"
+function start(){
+window.location="game.html"
 }
-
-const canvas=document.getElementById("galaxy")
-const ctx=canvas.getContext("2d")
-
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-
-let stars=[]
-
-for(let i=0;i<200;i++){
-
-stars.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2
-})
-
-}
-
-function draw(){
-
-ctx.fillStyle="black"
-ctx.fillRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-stars.forEach(s=>{
-ctx.beginPath()
-ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
-ctx.fill()
-
-s.y+=0.3
-if(s.y>canvas.height)s.y=0
-
-})
-
-requestAnimationFrame(draw)
-
-}
-
-draw()
 
 </script>
 
