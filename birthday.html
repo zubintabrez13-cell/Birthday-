@@ -1,66 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-<title>Happy Birthday Jaggu</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Jaggu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>🎉 Happy Birthday Jaggu 🎉</h1>
+<div class="stars"></div>
 
-<audio autoplay loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
+<div class="container">
+    <h1 class="bounce">🎉 Happy Birthday Jaggu! 🎉</h1>
 
-<div class="story">
+    <div class="interactive-section">
+        <div class="item-box">
+            <div class="cake" onclick="cutCake()">🎂</div>
+            <p>Tap to Cut</p>
+        </div>
+        <div class="item-box">
+            <div class="gift" onclick="openGift()">🎁</div>
+            <p>Tap to Open</p>
+        </div>
+    </div>
 
-<div class="slide">🥳 Welcome to your birthday universe</div>
-
-<div class="slide">🎂 Time to celebrate</div>
-
-<div class="slide">🎁 Open your gift</div>
-
-</div>
-
-<div class="cake" onclick="cutCake()">🎂</div>
-
-<div class="gift" onclick="openGift()">🎁</div>
-
-<div class="message" id="msg">
-
-Happy Birthday tuahera huuh, ab kya bole🫨, tumhe to khush hona chahiye you got me by your side...😮‍💨😉  
-
-the goat the legend the zubin...😎🫢  
-
-kabhi itna cool banda dekhi ho ?? 😎😎  
-
-jokes apart😌 so, ive never met you i don't know tum kesi ho, kesi dikhti ho, kya ho tum bass i guess angel priya na ho.. 🙃🤧  
-
-to be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakwass hoti hai but i like it  
-
-tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠  
-
-urge to know about every single pinch of your life..!! 🫠🫠  
-
-ye sab to theek hai one more thing you are awesome ive never met topper like you before jo itna cool ho  
-
-tum perfect tum best ho 🫡🫶🫵💪  
-
-i wish all your dreams come true orr tum ek bohot respectful or independent women Bano...🥰☺️  
-
-doesn't matter tum doctor bano ya na bano tum best krogi apni life mei...!!! 😇☺️☺️  
-
-soo once again happy birthday pyari jaggu 🫂🥰🥳
-
+    <div class="card-container" id="mainCard">
+        <div class="message-card">
+            <div class="scroll-area">
+                <p>Happy Birthday tuahera huuh, ab kya bole🫨, tumhe to khush hona chahiye you got me by your side...😮‍💨😉</p>
+                <p>The goat, the legend, the zubin...😎🫢</p>
+                <p>Kabhi itna cool banda dekhi ho ?? 😎😎</p>
+                <p>Jokes apart😌 so, ive never met you i don't know tum kesi ho, kesi dikhti ho, kya ho tum bass i guess angel priya na ho.. 🙃🤧</p>
+                <p>To be honest apko janne or samajhne ki koshish krna pasand hai apki baatein bakwass hoti hai but i like it.</p>
+                <p>Tumhe pareshan krna my fav prr jab aap pareshan krti fir bhi achha lagta..🤭🫠</p>
+                <p>Urge to know about every single pinch of your life..!! 🫠🫠</p>
+                <p>Ye sab to theek hai one more thing you are awesome ive never met topper like you before jo itna cool ho.</p>
+                <p><b>Tum perfect tum best ho 🫡🫶🫵💪</b></p>
+                <p>I wish all your dreams come true orr tum ek bohot respectful or independent women Bano...🥰☺️</p>
+                <p>Doesn't matter tum doctor bano ya na bano tum best krogi apni life mei...!!! 😇☺️☺️</p>
+                <p style="font-size: 1.5rem; color: #ff4e8a;">Soo once again happy birthday pyari jaggu 🫂🥰🥳</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <canvas id="fireworks"></canvas>
 
-<script src="script.js"></script>
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
+<script src="script.js"></script>
 </body>
 </html>
